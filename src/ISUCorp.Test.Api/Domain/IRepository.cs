@@ -1,6 +1,6 @@
 ﻿using ISUCorp.Test.Api.Data.Mapping.Helpers;
-using ISUCorp.Test.Api.Domain.AggregatesModel.ContactTypeAggregate;
-using ISUCorp.Test.Api.Domain.ContactAggregate;
+using ISUCorp.Test.Api.Domain.AggregatesModel.ContactTypeModel;
+using ISUCorp.Test.Api.Domain.ContactModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,6 +10,7 @@ namespace ISUCorp.Test.Api.Domain
     {
         #region ContactType
         Task<List<ContactType>> GetContactTypeByFilter(string filter);
+        Task<List<ContactType>> GetAllContactType();
         #endregion
 
         #region Contact
@@ -18,11 +19,13 @@ namespace ISUCorp.Test.Api.Domain
         Task<Contact> GetContactById(int contactId);
         Task RemoveContact(Contact contact);
         Task<List<Contact>> GetContactByFilter(string filter);
+        Task<PagerBase<ContactResult>> GetContactPager(int pageNumber);
         #endregion
 
         #region Reservation
         Task<Reservation> GetReservationById(int reservationId);
-        Task<PagerBase<ReservationResult>> GetReservationList(int sortOption, int pageNumber);
+        Task SaveReservation(Reservation reservation);
+        Task<PagerBase<ReservationResult>> GetReservationPager(int sortOption, int pageNumber);
         #endregion
 
         Task<bool> Commit();

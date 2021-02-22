@@ -1,6 +1,6 @@
 ﻿using ISUCorp.Test.Api.Data.Mapping.Helpers;
-using ISUCorp.Test.Api.Domain.AggregatesModel.ContactTypeAggregate;
-using ISUCorp.Test.Api.Domain.ContactAggregate;
+using ISUCorp.Test.Api.Domain.AggregatesModel.ContactTypeModel;
+using ISUCorp.Test.Api.Domain.ContactModel;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -28,5 +28,8 @@ namespace ISUCorp.Test.Api.Data
 
         [NotMapped]
         public DbSet<ReservationResult> ReservationResult { get; set; }
-     }
+
+        [NotMapped]
+        public DbSet<ContactResult> ContactResult { get; set; }
+    }
 }

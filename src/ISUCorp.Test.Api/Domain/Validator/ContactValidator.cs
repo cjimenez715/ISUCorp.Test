@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using ISUCorp.Test.Api.Domain.ContactAggregate;
+using ISUCorp.Test.Api.Domain.ContactModel;
 using ISUCorp.Test.Api.Domain.Resources.DomainProperties;
 using ISUCorp.Test.Api.Domain.Resources.DomainValidation;
 using Microsoft.Extensions.Localization;

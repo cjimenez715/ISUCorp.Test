@@ -9,6 +9,6 @@ namespace ISUCorp.Test.Api.Dtos.Contact
         public string Name { get; set; }
         public DateTime BirthDate { get; set; }
         public string PhoneNumber { get; set; }
-        public ContactTypeSearchDto ContactType { get; set; }
+        public int ContactTypeId { get; set; }
     }
 }

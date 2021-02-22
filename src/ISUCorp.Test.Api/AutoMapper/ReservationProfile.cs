@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
-using ISUCorp.Test.Api.Data.Mapping.Helpers;
+using ISUCorp.Test.Api.Domain.ContactModel;
 using ISUCorp.Test.Api.Dtos.Contact;
+using System;
 
 namespace ISUCorp.Test.Api.AutoMapper
 {
@@ -8,7 +9,8 @@ namespace ISUCorp.Test.Api.AutoMapper
     {
         public ReservationProfile()
         {
-            //CreateMap<ReservationPager, ReservationSearchDto>();
+            CreateMap<ReservationSaveDto, Reservation>()
+                .ForMember(p => p.ReservationDate, o => o.MapFrom(s => DateTime.Now));
         }
     }
 }

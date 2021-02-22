@@ -12,11 +12,11 @@ namespace ISUCorp.Test.Api.Migrations
 						SET ANSI_NULLS OFF 
 						GO
 
-						if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[sp_get_reservations_by_filter]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
-							drop procedure [dbo].[sp_get_reservations_by_filter]
+						if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[sp_get_reservations_pager]') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+							drop procedure [dbo].[sp_get_reservations_pager]
 						GO
 
-						CREATE PROCEDURE [dbo].[sp_get_reservations_by_filter]						
+						CREATE PROCEDURE [dbo].[sp_get_reservations_pager]						
 								@sortOption int,
 								@pageNumber int		
 						AS
@@ -39,7 +39,6 @@ namespace ISUCorp.Test.Api.Migrations
 						GO";
 
             migrationBuilder.Sql(sp);
-
 		}
 
         protected override void Down(MigrationBuilder migrationBuilder)

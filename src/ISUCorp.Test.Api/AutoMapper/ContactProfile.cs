@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using ISUCorp.Test.Api.Domain.AggregatesModel.ContactTypeAggregate;
-using ISUCorp.Test.Api.Domain.ContactAggregate;
+using ISUCorp.Test.Api.Domain.AggregatesModel.ContactTypeModel;
+using ISUCorp.Test.Api.Domain.ContactModel;
 using ISUCorp.Test.Api.Dtos.Contact;
 using ISUCorp.Test.Api.Dtos.ContactType;
 
@@ -15,7 +15,7 @@ namespace ISUCorp.Test.Api.AutoMapper
 
             CreateMap<Contact, ContactUpdateDto>();
             CreateMap<ContactSaveDto, Contact>();
-            CreateMap<ContactUpdateDto, Contact>()
-                .ForMember(p => p.ContactTypeId, o => o.MapFrom(s => s.ContactType.ContactTypeId));        }
+            CreateMap<ContactUpdateDto, Contact>();
+       }
     }
 }

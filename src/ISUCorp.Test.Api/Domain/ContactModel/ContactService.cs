@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace ISUCorp.Test.Api.Domain.ContactAggregate
+namespace ISUCorp.Test.Api.Domain.ContactModel
 {
     public class ContactService : IContactService
     {

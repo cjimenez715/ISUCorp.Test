@@ -1,4 +1,4 @@
-﻿using ISUCorp.Test.Api.Domain.ContactAggregate;
+﻿using ISUCorp.Test.Api.Domain.ContactModel;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

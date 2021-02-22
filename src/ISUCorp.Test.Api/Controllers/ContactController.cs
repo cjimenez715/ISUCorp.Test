@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using ISUCorp.Test.Api.Data.Mapping.Helpers;
 using ISUCorp.Test.Api.Domain;
-using ISUCorp.Test.Api.Domain.ContactAggregate;
+using ISUCorp.Test.Api.Domain.ContactModel;
 using ISUCorp.Test.Api.Dtos.Contact;
 using ISUCorp.Test.Api.Dtos.ContactType;
 using ISUCorp.Test.Api.Extensions;
@@ -37,11 +38,32 @@ namespace ISUCorp.Test.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("get-contact-by-filter")]
-        public async Task<ActionResult<List<ContactUpdateDto>>> GetcontactByFilter([FromQuery] string filter = "")
+        [HttpGet("get-all-contact-type")]
+        public async Task<ActionResult<List<ContactTypeSearchDto>>> GetAllContactType()
         {
-            var contacts = await _db.GetContactByFilter(filter);
+            var contactTypes = await _db.GetAllContactType();
+            var result = _mapper.Map<List<ContactTypeSearchDto>>(contactTypes);
+            return Ok(result);
+        }
+
+        [HttpGet("get-contact-by-filter")]
+        public async Task<ActionResult<List<ContactUpdateDto>>> GetContactByFilter([FromQuery] string filter = "")
+        {
+            var contacts = await _db.GetContactByFilter(string.IsNullOrEmpty(filter)? string.Empty : filter);
             var result = _mapper.Map<List<ContactUpdateDto>>(contacts);
+            return Ok(result);
+        }
+
+        [HttpGet("get-contact-for-edit/{contactId}")]
+        public async Task<ActionResult<List<ContactUpdateDto>>> GetContactById([FromRoute] int contactId)
+        {
+            var contact = await _db.GetContactById(contactId);
+            if(contact == null)
+            {
+                return NotFound();
+            }
+
+            var result = _mapper.Map<ContactUpdateDto>(contact);
             return Ok(result);
         }
 
@@ -83,6 +105,14 @@ namespace ISUCorp.Test.Api.Controllers
             await _contactService.RemoveContact(lastContact);
 
             return Ok();
+        }
+
+        [HttpGet("get-contact-pager")]
+        public async Task<ActionResult<PagerBase<ContactResult>>> GetContactPager([FromQuery] int pageNumber)
+        {
+            var contacts = await _db.GetContactPager(pageNumber);
+
+            return Ok(contacts);
         }
     }
 }

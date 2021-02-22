@@ -1,8 +1,8 @@
-﻿using ISUCorp.Test.Api.Domain.AggregatesModel.ContactTypeAggregate;
+﻿using ISUCorp.Test.Api.Domain.AggregatesModel.ContactTypeModel;
 using System;
 using System.Collections.Generic;
 
-namespace ISUCorp.Test.Api.Domain.ContactAggregate
+namespace ISUCorp.Test.Api.Domain.ContactModel
 {
     public class Contact
     {
@@ -40,15 +40,10 @@ namespace ISUCorp.Test.Api.Domain.ContactAggregate
             ContactTypeId = contactTypeId;
         }
 
-        public void AddReservation(Reservation reservation)
-        {
-            _reservations.Add(reservation);
-        }
 
-        public void RemoveReservation(int reservationId)
+        public bool IsUnassigned()
         {
-            var reservation = _reservations.Find(p => p.ReservationId == reservationId);
-            _reservations.Remove(reservation);
+            return ContactId == 0;
         }
     }
 }

@@ -2,7 +2,7 @@ using FluentValidation.AspNetCore;
 using ISUCorp.Test.Api.Configurations;
 using ISUCorp.Test.Api.Data;
 using ISUCorp.Test.Api.Domain;
-using ISUCorp.Test.Api.Domain.ContactAggregate;
+using ISUCorp.Test.Api.Domain.ContactModel;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -28,20 +28,30 @@ namespace ISUCorp.Test.Api
             services.AddAutoMapper(typeof(Startup));
 
             services.AddControllers()
-                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
+                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
+                .AddJsonOptions(options =>
+                {
+                    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                    options.JsonSerializerOptions.IgnoreNullValues = true;
+                });
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IContactService, ContactService>();
+            services.AddScoped<IReservationService, ReservationService>();
 
             services.AddLocalization(options => options.ResourcesPath = "");
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext)
         {
+
+            dataContext.Database.Migrate();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -57,6 +67,12 @@ namespace ISUCorp.Test.Api
             var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures.Cultures[0])
                 .AddSupportedCultures(supportedCultures.Cultures)
                 .AddSupportedUICultures(supportedCultures.Cultures);
+
+            app.UseCors(x => x
+               .AllowAnyMethod()
+               .AllowAnyHeader()
+               .SetIsOriginAllowed(origin => true)
+               .AllowCredentials());
 
             app.UseEndpoints(endpoints =>
             {

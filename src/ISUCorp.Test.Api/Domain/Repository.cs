@@ -1,7 +1,7 @@
 ﻿using ISUCorp.Test.Api.Data;
 using ISUCorp.Test.Api.Data.Mapping.Helpers;
-using ISUCorp.Test.Api.Domain.AggregatesModel.ContactTypeAggregate;
-using ISUCorp.Test.Api.Domain.ContactAggregate;
+using ISUCorp.Test.Api.Domain.AggregatesModel.ContactTypeModel;
+using ISUCorp.Test.Api.Domain.ContactModel;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -21,15 +21,18 @@ namespace ISUCorp.Test.Api.Domain
 
         public async Task<List<ContactType>> GetContactTypeByFilter(string filter)
         {
-            var result = _db.ContactType.Where(p => p.Name.ToLower().Contains(filter.ToLower()));
-            return await Task.Run(() => new List<ContactType>(result));
+            return await _db.ContactType.Where(p => p.Name.ToLower().Contains(filter.ToLower())).ToListAsync();
+        }
+
+        public async Task<List<ContactType>> GetAllContactType()
+        {
+            return await _db.ContactType.ToListAsync();
         }
 
         #region Contact
         public async Task<Contact> GetContactById(int contactId)
         {
-            var result = _db.Contact.Include(p => p.ContactType).FirstOrDefault(p => p.ContactId.Equals(contactId));
-            return await Task.Run(() => result);
+            return await _db.Contact.Include(p => p.ContactType).FirstOrDefaultAsync(p => p.ContactId.Equals(contactId));
         }
 
         public async Task SaveContact(Contact contact)
@@ -51,8 +54,20 @@ namespace ISUCorp.Test.Api.Domain
 
         public async Task<List<Contact>> GetContactByFilter(string filter)
         {
-            var result = _db.Contact.AsNoTracking().Include(p => p.ContactType).Where(p => p.Name.ToLower().Contains(filter.ToLower()));
-            return await Task.Run(() => new List<Contact>(result));
+            return await _db.Contact.AsNoTracking().Include(p => p.ContactType)
+                        .Where(p => p.Name.ToLower()
+                        .Contains(filter.ToLower())).ToListAsync();
+        }
+
+        public async Task<PagerBase<ContactResult>> GetContactPager(int pageNumber)
+        {
+            var pageNumberParam = new SqlParameter("@pageNumber", pageNumber);
+            var items = await _db.ContactResult
+                   .FromSqlInterpolated($"exec sp_get_contacts_pager {pageNumberParam}")
+                   .ToListAsync();
+            var count = _db.Contact.Count();
+
+            return new PagerBase<ContactResult>() { Items = items, Count = count };
         }
         #endregion
 
@@ -65,12 +80,17 @@ namespace ISUCorp.Test.Api.Domain
                 .FirstOrDefaultAsync(p => p.ReservationId.Equals(reservationId));
         }
 
-        public async Task<PagerBase<ReservationResult>> GetReservationList(int sortOption, int pageNumber)
+        public async Task SaveReservation(Reservation reservation)
+        {
+            await _db.Reservation.AddRangeAsync(reservation);
+        }
+
+        public async Task<PagerBase<ReservationResult>> GetReservationPager(int sortOption, int pageNumber)
         {
             var sortOptionParam = new SqlParameter("@sortOption", sortOption);
             var pageNumberParam = new SqlParameter("@pageNumber", pageNumber);
             var items = await _db.ReservationResult
-                   .FromSqlInterpolated($"exec sp_get_reservations_by_filter {sortOptionParam}, {pageNumberParam}")
+                   .FromSqlInterpolated($"exec sp_get_reservations_pager {sortOptionParam}, {pageNumberParam}")
                    .ToListAsync();
             var count = _db.Reservation.Count();
 

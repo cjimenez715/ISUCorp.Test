@@ -1,5 +1,5 @@
 ﻿
-namespace ISUCorp.Test.Api.Domain.AggregatesModel.ContactTypeAggregate
+namespace ISUCorp.Test.Api.Domain.AggregatesModel.ContactTypeModel
 {
     public class ContactType
     {
