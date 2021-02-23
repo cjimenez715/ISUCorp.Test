@@ -61,7 +61,16 @@ namespace ISUCorp.Test.Api.Domain.Resources.DomainValidation {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;{PropertyName}&apos; is Required.
+        ///   Looks up a localized string similar to Contact Name already exists.
+        /// </summary>
+        public static string ContactNameAlreadyExists {
+            get {
+                return ResourceManager.GetString("ContactNameAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {PropertyName} is Required.
         /// </summary>
         public static string IsRequired {
             get {

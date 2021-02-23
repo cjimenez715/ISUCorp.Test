@@ -67,6 +67,7 @@ namespace ISUCorp.Test.Api
             var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures.Cultures[0])
                 .AddSupportedCultures(supportedCultures.Cultures)
                 .AddSupportedUICultures(supportedCultures.Cultures);
+            app.UseRequestLocalization(localizationOptions);
 
             app.UseCors(x => x
                .AllowAnyMethod()

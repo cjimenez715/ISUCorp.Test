@@ -117,13 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BirthDate" xml:space="preserve">
-    <value>Birth Date</value>
+  <data name="ContactNameAlreadyExists" xml:space="preserve">
+    <value>Ya existe un Contacto con este nombre</value>
   </data>
-  <data name="ContactType" xml:space="preserve">
-    <value>Contact Type</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Contact Name</value>
+  <data name="IsRequired" xml:space="preserve">
+    <value>{PropertyName} Requerido</value>
   </data>
 </root>

@@ -118,12 +118,12 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="BirthDate" xml:space="preserve">
-    <value>Birth Date</value>
+    <value>Fecha de Nacimiento</value>
   </data>
   <data name="ContactType" xml:space="preserve">
-    <value>Contact Type</value>
+    <value>Tipo de Contacto</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Contact Name</value>
+    <value>Nombre de Contacto</value>
   </data>
 </root>

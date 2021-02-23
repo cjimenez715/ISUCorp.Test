@@ -12,8 +12,8 @@ namespace ISUCorp.Test.Api.Domain.Validator
             IStringLocalizer<DomainValidationResource> localizerValidator)
         {
             RuleFor(c => c.Name).NotEmpty().WithName(localizer["Name"]).WithMessage(localizerValidator["IsRequired"]);
-            RuleFor(c => c.BirthDate).NotEmpty().WithName(localizer["BirthDate"]).WithMessage(localizerValidator["IsRequired"]);
             RuleFor(c => c.ContactTypeId).NotNull().GreaterThan(0).WithName(localizer["ContactType"]).WithMessage(localizerValidator["IsRequired"]);
+            RuleFor(c => c.BirthDate).NotEmpty().WithName(localizer["BirthDate"]).WithMessage(localizerValidator["IsRequired"]);
         }
     }
 }

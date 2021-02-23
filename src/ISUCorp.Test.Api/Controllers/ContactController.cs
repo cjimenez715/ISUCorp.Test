@@ -7,6 +7,7 @@ using ISUCorp.Test.Api.Dtos.Contact;
 using ISUCorp.Test.Api.Dtos.ContactType;
 using ISUCorp.Test.Api.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -49,7 +50,7 @@ namespace ISUCorp.Test.Api.Controllers
         [HttpGet("get-contact-by-filter")]
         public async Task<ActionResult<List<ContactUpdateDto>>> GetContactByFilter([FromQuery] string filter = "")
         {
-            var contacts = await _db.GetContactByFilter(string.IsNullOrEmpty(filter)? string.Empty : filter);
+            var contacts = await _db.GetContactByFilter(filter.ReplaceNullByEmpty());
             var result = _mapper.Map<List<ContactUpdateDto>>(contacts);
             return Ok(result);
         }
@@ -59,9 +60,7 @@ namespace ISUCorp.Test.Api.Controllers
         {
             var contact = await _db.GetContactById(contactId);
             if(contact == null)
-            {
                 return NotFound();
-            }
 
             var result = _mapper.Map<ContactUpdateDto>(contact);
             return Ok(result);
@@ -70,13 +69,23 @@ namespace ISUCorp.Test.Api.Controllers
         [HttpPost]
         public async Task<ActionResult> SaveContact([FromBody] ContactSaveDto contact)
         {
-            var newContact = _mapper.Map<Contact>(contact);
+            var newContact = new Contact(contact.Name.ReplaceNullByEmpty().DeleteWhiteSpaces(),
+                                         contact.BirthDate != null ? contact.BirthDate.Value : DateTime.MinValue,
+                                         contact.PhoneNumber.ReplaceNullByEmpty().DeleteWhiteSpaces(),
+                                         contact.ContactTypeId);
+
             ModelState.AddValidationResult(await _validatorFactory.GetValidator<Contact>().ValidateAsync(newContact));
 
             if (!ModelState.IsValid)
                 return Conflict(ModelState.GetValidationProblemDetails());
 
             await _contactService.SaveContact(newContact);
+
+            ModelState.AddValidationResult(_contactService.ValidationResult());
+
+            if (!ModelState.IsValid)
+                return Conflict(ModelState.GetValidationProblemDetails());
+
             return Created(string.Empty, newContact.ContactId);
         }
 
@@ -86,13 +95,23 @@ namespace ISUCorp.Test.Api.Controllers
             var lastContact = await _db.GetContactById(contactId);
             if (lastContact == null) return NotFound();
 
-            var contactMapped = _mapper.Map<Contact>(contact);
+            var contactMapped = new Contact(contact.Name.ReplaceNullByEmpty().DeleteWhiteSpaces(),
+                                         contact.BirthDate != null ? contact.BirthDate.Value : DateTime.MinValue,
+                                         contact.PhoneNumber.ReplaceNullByEmpty().DeleteWhiteSpaces(),
+                                         contact.ContactTypeId);
+
             ModelState.AddValidationResult(await _validatorFactory.GetValidator<Contact>().ValidateAsync(contactMapped));
 
             if (!ModelState.IsValid)
                 return Conflict(ModelState.GetValidationProblemDetails());
 
             await _contactService.UpdateContact(lastContact, contactMapped);
+
+            ModelState.AddValidationResult(_contactService.ValidationResult());
+
+            if (!ModelState.IsValid)
+                return Conflict(ModelState.GetValidationProblemDetails());
+
             return Created(string.Empty, lastContact.ContactId);
         }
 

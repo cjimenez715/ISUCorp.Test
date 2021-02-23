@@ -10,7 +10,5 @@ namespace ISUCorp.Test.Api.Data.Mapping.Helpers
         public DateTime ReservationDate { get; set; }
         public string Content { get; set; }
         public string ContactName { get; set; }
-        public string ContactPhoneNumber { get; set; }
-        public DateTime ContactBirthDate { get; set; }
     }
 }

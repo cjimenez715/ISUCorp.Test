@@ -61,11 +61,11 @@ namespace ISUCorp.Test.Api.Domain.Resources.DomainProperties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Birth Day.
+        ///   Looks up a localized string similar to Birth Date.
         /// </summary>
-        public static string BirthDay {
+        public static string BirthDate {
             get {
-                return ResourceManager.GetString("BirthDay", resourceCulture);
+                return ResourceManager.GetString("BirthDate", resourceCulture);
             }
         }
         
@@ -79,7 +79,7 @@ namespace ISUCorp.Test.Api.Domain.Resources.DomainProperties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
+        ///   Looks up a localized string similar to Contact Name.
         /// </summary>
         public static string Name {
             get {

@@ -117,7 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="ContactNameAlreadyExists" xml:space="preserve">
+    <value>Contact Name already exists</value>
+  </data>
   <data name="IsRequired" xml:space="preserve">
-    <value>'{PropertyName}' is Required</value>
+    <value>{PropertyName} is Required</value>
   </data>
 </root>

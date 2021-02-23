@@ -32,7 +32,13 @@ namespace ISUCorp.Test.Api.Domain
         #region Contact
         public async Task<Contact> GetContactById(int contactId)
         {
-            return await _db.Contact.Include(p => p.ContactType).FirstOrDefaultAsync(p => p.ContactId.Equals(contactId));
+            return await _db.Contact.Include(p => p.ContactType)
+                            .FirstOrDefaultAsync(p => p.ContactId.Equals(contactId));
+        }
+
+        public async Task<Contact> GetContactByName(string name)
+        {
+            return await _db.Contact.AsNoTracking().FirstOrDefaultAsync(p => p.Name.ToLower().Equals(name.ToLower()));
         }
 
         public async Task SaveContact(Contact contact)

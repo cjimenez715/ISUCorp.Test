@@ -32,6 +32,17 @@ namespace ISUCorp.Test.Api.Domain.ContactModel
             _reservations = new List<Reservation>();
         }
 
+        public Contact(int contactId, string name, DateTime birthDate, string phoneNumber, int contactTypeId)
+        {
+            ContactId = contactId;
+            Name = name;
+            BirthDate = birthDate;
+            PhoneNumber = phoneNumber;
+            ContactTypeId = contactTypeId;
+
+            _reservations = new List<Reservation>();
+        }
+
         public void Update(string name, DateTime birthDate, string phoneNumber, int contactTypeId)
         {
             Name = name;

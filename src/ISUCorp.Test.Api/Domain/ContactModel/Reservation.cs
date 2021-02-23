@@ -28,5 +28,10 @@ namespace ISUCorp.Test.Api.Domain.ContactModel
             Content = content;
             ContactId = contactId;
         }
+
+        public void SetContact(Contact contact)
+        {
+            Contact = contact;
+        }
     }
 }

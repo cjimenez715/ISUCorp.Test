@@ -17,6 +17,7 @@ namespace ISUCorp.Test.Api.Domain
         Task SaveContact(Contact contact);
         Task UpdateContact(Contact contact);
         Task<Contact> GetContactById(int contactId);
+        Task<Contact> GetContactByName(string name);
         Task RemoveContact(Contact contact);
         Task<List<Contact>> GetContactByFilter(string filter);
         Task<PagerBase<ContactResult>> GetContactPager(int pageNumber);
