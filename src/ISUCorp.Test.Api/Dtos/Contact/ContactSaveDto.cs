@@ -1,8 +1,8 @@
-﻿using ISUCorp.Test.Api.Dtos.ContactType;
-using System;
+﻿using System;
 
 namespace ISUCorp.Test.Api.Dtos.Contact
 {
+    //Contact Save DTO for UI Acccess
     public class ContactSaveDto
     {
         public string Name { get; set; }

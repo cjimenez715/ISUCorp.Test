@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 
 namespace ISUCorp.Test.Api.Controllers
 {
+    //Controller created for Contact operations
     [Route("api/contact")]
     [ApiController]
     public class ContactController : ControllerBase
@@ -22,6 +23,7 @@ namespace ISUCorp.Test.Api.Controllers
         private readonly IValidatorFactory _validatorFactory;
         private readonly IContactService _contactService;
 
+        //Injecting dependencies
         public ContactController(IRepository db, IMapper mapper, 
             IValidatorFactory validatorFactory, IContactService contactService)
         {
@@ -31,6 +33,7 @@ namespace ISUCorp.Test.Api.Controllers
             _contactService = contactService;
         }
 
+        //Endpoint for retrieving ContactTypes by name Filter
         [HttpGet("get-contact-type-by-filter")]
         public async Task<ActionResult<List<ContactTypeSearchDto>>> GetContactTypeByFilter([FromQuery] string filter = "")
         {
@@ -39,6 +42,7 @@ namespace ISUCorp.Test.Api.Controllers
             return Ok(result);
         }
 
+        //Endpoint for retrieving All ContactTypes
         [HttpGet("get-all-contact-type")]
         public async Task<ActionResult<List<ContactTypeSearchDto>>> GetAllContactType()
         {
@@ -47,6 +51,7 @@ namespace ISUCorp.Test.Api.Controllers
             return Ok(result);
         }
 
+        //Endpoint for retrieving Contacts by Name Filter
         [HttpGet("get-contact-by-filter")]
         public async Task<ActionResult<List<ContactUpdateDto>>> GetContactByFilter([FromQuery] string filter = "")
         {
@@ -55,6 +60,7 @@ namespace ISUCorp.Test.Api.Controllers
             return Ok(result);
         }
 
+        //Endpoint for retrieving a Contact by Id 
         [HttpGet("get-contact-for-edit/{contactId}")]
         public async Task<ActionResult<List<ContactUpdateDto>>> GetContactById([FromRoute] int contactId)
         {
@@ -66,6 +72,7 @@ namespace ISUCorp.Test.Api.Controllers
             return Ok(result);
         }
 
+        //Endpoint for creating Contact
         [HttpPost]
         public async Task<ActionResult> SaveContact([FromBody] ContactSaveDto contact)
         {
@@ -73,7 +80,7 @@ namespace ISUCorp.Test.Api.Controllers
                                          contact.BirthDate != null ? contact.BirthDate.Value : DateTime.MinValue,
                                          contact.PhoneNumber.ReplaceNullByEmpty().DeleteWhiteSpaces(),
                                          contact.ContactTypeId);
-
+            //Validating Contact data
             ModelState.AddValidationResult(await _validatorFactory.GetValidator<Contact>().ValidateAsync(newContact));
 
             if (!ModelState.IsValid)
@@ -89,6 +96,7 @@ namespace ISUCorp.Test.Api.Controllers
             return Created(string.Empty, newContact.ContactId);
         }
 
+        //Method for Updating Contact by Id
         [HttpPut("{contactId}")]
         public async Task<ActionResult> UpdateContact([FromRoute] int contactId, [FromBody] ContactUpdateDto contact)
         {
@@ -100,6 +108,7 @@ namespace ISUCorp.Test.Api.Controllers
                                          contact.PhoneNumber.ReplaceNullByEmpty().DeleteWhiteSpaces(),
                                          contact.ContactTypeId);
 
+            //Validating Contact data
             ModelState.AddValidationResult(await _validatorFactory.GetValidator<Contact>().ValidateAsync(contactMapped));
 
             if (!ModelState.IsValid)
@@ -107,6 +116,7 @@ namespace ISUCorp.Test.Api.Controllers
 
             await _contactService.UpdateContact(lastContact, contactMapped);
 
+            //Validate Service execution
             ModelState.AddValidationResult(_contactService.ValidationResult());
 
             if (!ModelState.IsValid)
@@ -115,6 +125,7 @@ namespace ISUCorp.Test.Api.Controllers
             return Created(string.Empty, lastContact.ContactId);
         }
 
+        //Endpoint for Deleting Contact and dependencis by Id
         [HttpDelete("{id}")]
         public async Task<ActionResult> RemovePerson([FromRoute] int id)
         {
@@ -126,6 +137,7 @@ namespace ISUCorp.Test.Api.Controllers
             return Ok();
         }
 
+        //Endpoint for retrieving Contacts paged
         [HttpGet("get-contact-pager")]
         public async Task<ActionResult<PagerBase<ContactResult>>> GetContactPager([FromQuery] int pageNumber)
         {

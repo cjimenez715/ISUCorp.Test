@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace ISUCorp.Test.Api.Domain
 {
+    //Interface created for DataAccess Contracts
     public interface IRepository
     {
         #region ContactType
@@ -29,6 +30,7 @@ namespace ISUCorp.Test.Api.Domain
         Task<PagerBase<ReservationResult>> GetReservationPager(int sortOption, int pageNumber);
         #endregion
 
+        //Commit for all Operations
         Task<bool> Commit();
     }
 }

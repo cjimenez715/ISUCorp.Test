@@ -1,8 +1,8 @@
-﻿using ISUCorp.Test.Api.Dtos.ContactType;
-using System;
+﻿using System;
 
 namespace ISUCorp.Test.Api.Dtos.Contact
 {
+    //Contact Update DTO for UI Acccess
     public class ContactUpdateDto
     {
         public int ContactId { get; set; }

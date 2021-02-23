@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace ISUCorp.Test.Api.Domain
 {
+    //Repository created for DataAccess Only
     public class Repository : IRepository
     {
         private readonly DataContext _db;

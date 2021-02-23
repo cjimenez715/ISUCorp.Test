@@ -4,7 +4,8 @@ namespace ISUCorp.Test.Api.Migrations
 {
     public partial class sp_get_reservations_by_filter : Migration
     {
-        protected override void Up(MigrationBuilder migrationBuilder)
+		//Migration created to generate sp_get_reservations_pager for filters
+		protected override void Up(MigrationBuilder migrationBuilder)
         {
             var sp = @" SET QUOTED_IDENTIFIER OFF 
 						GO

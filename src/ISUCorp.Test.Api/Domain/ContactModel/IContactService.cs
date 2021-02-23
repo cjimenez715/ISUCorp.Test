@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 
 namespace ISUCorp.Test.Api.Domain.ContactModel
 {
+    //Inteface for settings Contact Service Contract
     public interface IContactService : INotifierService
     {
         Task<bool> SaveContact(Contact contact);

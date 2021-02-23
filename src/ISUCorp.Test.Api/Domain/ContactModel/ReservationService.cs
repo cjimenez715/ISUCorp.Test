@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace ISUCorp.Test.Api.Domain.ContactModel
 {
+    //Class Created for Reservation Business Rules
     public class ReservationService : NotifierService, IReservationService
     {
+        //Injecting dependencies
         private readonly IRepository _repository;
         private readonly IStringLocalizer<DomainValidationResource> _localizer;
 
@@ -17,6 +19,7 @@ namespace ISUCorp.Test.Api.Domain.ContactModel
             _localizer = localizer;
         }
 
+        //Business rules and validations for Reservation Save
         public async Task<bool> SaveReservation(Reservation reservation)
         {
             var contactValidation = await _repository.GetContactByName(reservation.Contact.Name);
@@ -45,6 +48,7 @@ namespace ISUCorp.Test.Api.Domain.ContactModel
             return await _repository.Commit();
         }
 
+        //Getting Validation result
         public override ValidationResult ValidationResult()
         {
             return GetValidationResult();

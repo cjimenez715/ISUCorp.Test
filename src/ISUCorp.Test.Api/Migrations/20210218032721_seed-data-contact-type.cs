@@ -4,6 +4,7 @@ namespace ISUCorp.Test.Api.Migrations
 {
     public partial class seeddatacontacttype : Migration
     {
+        //Migration created to Init table ContactType
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.InsertData(

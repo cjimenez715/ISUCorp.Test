@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ISUCorp.Test.Api.Data.Mapping
 {
+    //Mapping Class ContactType
     public class ContactMapping : IEntityTypeConfiguration<Contact>
     {
         public void Configure(EntityTypeBuilder<Contact> builder)

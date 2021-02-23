@@ -2,6 +2,7 @@
 
 namespace ISUCorp.Test.Api.Domain.ContactModel
 {
+    //No Anemic class created for Reservation
     public class Reservation
     {
         public int ReservationId { get; set; }
@@ -22,13 +23,7 @@ namespace ISUCorp.Test.Api.Domain.ContactModel
             ContactId = contactId;
         }
 
-        public void Update(DateTime reservationDate, string content, int contactId)
-        {
-            ReservationDate = reservationDate;
-            Content = content;
-            ContactId = contactId;
-        }
-
+        //Method created for Setting Contact to Reservation
         public void SetContact(Contact contact)
         {
             Contact = contact;

@@ -5,6 +5,7 @@ using System;
 
 namespace ISUCorp.Test.Api.AutoMapper
 {
+    //Mapping for Reservation operations
     public class ReservationProfile : Profile
     {
         public ReservationProfile()

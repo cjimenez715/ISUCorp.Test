@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace ISUCorp.Test.Api.Data.Mapping
 {
+    //Mapping Reservation Class, Pk ContactId
     public class ReservationMapping : IEntityTypeConfiguration<Reservation>
     {
         public void Configure(EntityTypeBuilder<Reservation> builder)

@@ -1,9 +1,8 @@
-﻿
-
-using System;
+﻿using System;
 
 namespace ISUCorp.Test.Api.Dtos.Contact
 {
+    //Reservation Save DTO for UI Acccess
     public class ReservationSaveDto
     {
         public ContactUpdateDto Contact { get; set; }

@@ -2,6 +2,7 @@
 
 namespace ISUCorp.Test.Api.Dtos.Contact
 {
+    //Reservation Search DTO for UI Access
     public class ReservationSearchDto
     {
         public int ReservationId { get; set; }

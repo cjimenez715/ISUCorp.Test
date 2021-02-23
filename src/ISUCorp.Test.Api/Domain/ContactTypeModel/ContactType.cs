@@ -1,6 +1,7 @@
 ﻿
 namespace ISUCorp.Test.Api.Domain.AggregatesModel.ContactTypeModel
 {
+    //Class created just for Mapping ContactType
     public class ContactType
     {
         public int ContactTypeId { get; private set; }

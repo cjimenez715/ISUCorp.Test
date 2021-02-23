@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace ISUCorp.Test.Api.Controllers
 {
+    //Controller created for Reservation operations
     [Route("api/reservation")]
     [ApiController]
     public class ReservationController : ControllerBase
@@ -20,6 +21,7 @@ namespace ISUCorp.Test.Api.Controllers
         private readonly IReservationService _reservationService;
         private readonly IValidatorFactory _validatorFactory;
 
+        //Injecting dependencies
         public ReservationController(IRepository db, IMapper mapper, 
             IReservationService reservationService, IValidatorFactory validatorFactory)
         {
@@ -29,6 +31,7 @@ namespace ISUCorp.Test.Api.Controllers
             _validatorFactory = validatorFactory;
         }
 
+        //Endpoint for retrieving Reservation Paged
         [HttpGet("get-reservation-pager")]
         public async Task<ActionResult<PagerBase<ReservationResult>>> GetReservationPager([FromQuery] int sortOption, [FromQuery] int pageNumber)
         {
@@ -37,6 +40,7 @@ namespace ISUCorp.Test.Api.Controllers
             return Ok(reservations);
         }
 
+        //Endpoint for Creating reservation, Create Contact if does not exits, Update Contact if exits and add a Reservation
         [HttpPost]
         public async Task<ActionResult> SaveReservation([FromBody] ReservationSaveDto reservation)
         {
@@ -45,7 +49,7 @@ namespace ISUCorp.Test.Api.Controllers
                                          reservation.Contact.BirthDate != null ? reservation.Contact.BirthDate.Value : DateTime.MinValue,
                                          reservation.Contact.PhoneNumber.ReplaceNullByEmpty().DeleteWhiteSpaces(),
                                          reservation.Contact.ContactTypeId));
-
+            //Validate Contact properties
             ModelState.AddValidationResult(await _validatorFactory.GetValidator<Contact>().ValidateAsync(newReservation.Contact));
 
             if (!ModelState.IsValid)
@@ -53,6 +57,7 @@ namespace ISUCorp.Test.Api.Controllers
 
             await _reservationService.SaveReservation(newReservation);
 
+            //Validate Service execution
             ModelState.AddValidationResult(_reservationService.ValidationResult());
 
             if (!ModelState.IsValid)

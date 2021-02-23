@@ -25,8 +25,10 @@ namespace ISUCorp.Test.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //Setting Automapper
             services.AddAutoMapper(typeof(Startup));
 
+            //Setting Json format
             services.AddControllers()
                 .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>())
                 .AddJsonOptions(options =>
@@ -35,9 +37,11 @@ namespace ISUCorp.Test.Api
                     options.JsonSerializerOptions.IgnoreNullValues = true;
                 });
 
+            //SQL DataBase Connection
             services.AddDbContext<DataContext>(options => options.UseSqlServer(
                 Configuration.GetConnectionString("DefaultConnection")));
 
+            //Using Dependecy Inversion for Services and DataAccess
             services.AddScoped<IRepository, Repository>();
             services.AddScoped<IContactService, ContactService>();
             services.AddScoped<IReservationService, ReservationService>();
@@ -49,7 +53,7 @@ namespace ISUCorp.Test.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DataContext dataContext)
         {
-
+            //Executing migration for first start APP
             dataContext.Database.Migrate();
 
             if (env.IsDevelopment())
@@ -63,18 +67,21 @@ namespace ISUCorp.Test.Api
 
             app.UseAuthorization();
 
+            //Setting languages that App supports
             var supportedCultures = Configuration.GetSection("SupportedCultures").Get<SupportedCultures>();
             var localizationOptions = new RequestLocalizationOptions().SetDefaultCulture(supportedCultures.Cultures[0])
                 .AddSupportedCultures(supportedCultures.Cultures)
                 .AddSupportedUICultures(supportedCultures.Cultures);
             app.UseRequestLocalization(localizationOptions);
 
+            //Allowing any request server
             app.UseCors(x => x
                .AllowAnyMethod()
                .AllowAnyHeader()
                .SetIsOriginAllowed(origin => true)
                .AllowCredentials());
 
+            //Setting default endpoint
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

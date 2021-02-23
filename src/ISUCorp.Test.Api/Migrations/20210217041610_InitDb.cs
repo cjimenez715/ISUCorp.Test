@@ -5,6 +5,7 @@ namespace ISUCorp.Test.Api.Migrations
 {
     public partial class InitDb : Migration
     {
+        //Migration created to init the database model
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(

@@ -6,6 +6,7 @@ using Microsoft.Extensions.Localization;
 
 namespace ISUCorp.Test.Api.Domain.Validator
 {
+    //Contact Validation properties Rules and message concatenation
     public class ContactValidator : AbstractValidator<Contact>
     {
         public ContactValidator(IStringLocalizer<DomainPropertiesResource> localizer,

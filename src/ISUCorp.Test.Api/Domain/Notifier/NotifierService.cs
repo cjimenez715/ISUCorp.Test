@@ -2,6 +2,7 @@
 
 namespace ISUCorp.Test.Api.Domain.Notifier
 {
+    //Class created for handling Services ValidationResult
     public abstract class NotifierService : INotifierService
     {
         private readonly ValidationResult _validationResult;

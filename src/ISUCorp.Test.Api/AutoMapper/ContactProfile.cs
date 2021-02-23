@@ -9,6 +9,7 @@ namespace ISUCorp.Test.Api.AutoMapper
 {
     public class ContactProfile : Profile
     {
+        //Mappings for Contact operations
         public ContactProfile()
         {
             CreateMap<ContactType, ContactTypeSearchDto>();

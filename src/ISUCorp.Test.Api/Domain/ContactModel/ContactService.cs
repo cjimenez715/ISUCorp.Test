@@ -7,8 +7,10 @@ using FluentValidation.Results;
 
 namespace ISUCorp.Test.Api.Domain.ContactModel
 {
+    //Class Created for Contact Business Rules
     public class ContactService : NotifierService, IContactService
     {
+        //Injecting Dependencies
         private readonly IRepository _repository;
         private readonly IStringLocalizer<DomainValidationResource> _localizer;
 
@@ -18,7 +20,7 @@ namespace ISUCorp.Test.Api.Domain.ContactModel
             _localizer = localizer;
         }
 
-       
+        //Business rules and validations for Contact Save
         public async Task<bool> SaveContact(Contact contact)
         {
             var contactValidation = await _repository.GetContactByName(contact.Name);
@@ -34,6 +36,7 @@ namespace ISUCorp.Test.Api.Domain.ContactModel
             return await _repository.Commit();
         }
 
+        //Business rules and validations for Contact Update
         public async Task<bool> UpdateContact(Contact contact, Contact candidate)
         {
             var contactValidation = await _repository.GetContactByName(candidate.Name);
@@ -51,6 +54,7 @@ namespace ISUCorp.Test.Api.Domain.ContactModel
             return await _repository.Commit();
         }
 
+        //Business rules and validations for Contact Delete
         public async Task RemoveContact(Contact contact)
         {
             await _repository.RemoveContact(contact);

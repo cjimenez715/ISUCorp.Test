@@ -3,6 +3,7 @@ using System;
 
 namespace ISUCorp.Test.Api.Data.Mapping.Helpers
 {
+    //Class no mapped created for retrieving Contact data
     [Keyless]
     public class ContactResult
     {
